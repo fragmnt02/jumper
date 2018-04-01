@@ -1,5 +1,5 @@
 //BUCLE PRINCIPAL - Ejecución
-var FPS=24;
+var FPS=10;
 setInterval(function() {
     principal();
 },1000/FPS);
@@ -64,7 +64,7 @@ var sujeto={
     velocidadY: 18,
     velocidadYMax:9,
     salto:20,
-    gravedad:2,
+    gravedad:2.5,
     saltando:false
 };
 
@@ -111,7 +111,7 @@ function logicaObstaculo() {
 
 //Creando nube
 function dibujaNube() {
-    contexto.drawImage(sprites,472,14,49,15,nube.X,nube.Y,50,50);
+    contexto.drawImage(sprites,446,246,62,14,nube.X,nube.Y,62,14);
 }
 
 var nube={
@@ -124,7 +124,7 @@ function logicaNube() {
     if (nube.X>-20) {
         nube.X-=nube.velocidad;
     } else {
-        nube.X=ancho+100;
+        nube.X=ancho+10;
     }
 }
 
@@ -151,6 +151,11 @@ function logicaSuelo() {
 function colision() {
     if (obstaculo.X>=100 && obstaculo.X<=150) {
         if(sujeto.Y>=suelo-50){
+            if (nivel.puntuacionMax<nivel.puntuacion) {
+                nivel.puntuacionMax=nivel.puntuacion;
+            }
+            contexto.font="20px impact";
+            contexto.fillText("Puntuación Máxima: "+nivel.puntuacionMax,150,50);
             nivel.muerto=true;
             nivel.velocidad=0;
             nube.velocidad=0;
@@ -162,9 +167,10 @@ function colision() {
 
 //Creando nivel
 var nivel={
-    velocidad:9,
+    velocidad:15,
     puntuacion:0,
-    muerto:false
+    muerto:false,
+    puntuacionMax:0
 };
 
 //Muerte
