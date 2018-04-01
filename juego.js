@@ -1,5 +1,5 @@
 //BUCLE PRINCIPAL - Ejecución
-var FPS=50;
+var FPS=24;
 setInterval(function() {
     principal();
 },1000/FPS);
@@ -24,6 +24,7 @@ function principal() {
 var canvas, contexto;
 var sprites;
 var suelo=200;
+var sprite=0;
 
 function cargarElementos() {
     canvas=document.getElementById("canvas");
@@ -38,7 +39,22 @@ function cargarSprites() {
 
 function dibujaSujeto() {
     //drawImage(<Objeto Image>, <X Sprite>, <Y Sprite>, <Ancho Sprite>, <Alto Sprite>, <X en Canvas>, <Y en Canvas>, <Ancho en Canvas>, <Alto en Canvas>);
-    contexto.drawImage(sprites,0,47,45,49,sujeto.X,sujeto.Y,50,50);
+    if(nivel.muerto){
+        contexto.drawImage(sprites,67,45,44,44,sujeto.X,sujeto.Y,50,50);
+    }else{
+        if (sujeto.saltando) {
+            contexto.drawImage(sprites,5,45,44,44,sujeto.X,sujeto.Y,50,50);
+        }else{
+            if (sprite==0) {
+                contexto.drawImage(sprites,5,121,44,44,sujeto.X,sujeto.Y,50,50);
+                sprite=1;
+            } else {
+                contexto.drawImage(sprites,54,121,44,44,sujeto.X,sujeto.Y,50,50);
+                sprite=0;
+            }
+        }
+    }
+    
 }
 
 //Creando sujeto y animandolo
@@ -72,8 +88,6 @@ function gravedad(){
         }
     }
 }
-
-
 
 //Creando obstaculo
 function dibujaObstaculo() {
